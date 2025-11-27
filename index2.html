@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalCodeHub</title>
+     <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Contacter-nous</h2>
+        <form id="contactform" onsubmit="submitForm(event)">
+        <label for="name">Nom</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message</label>
+        <input type="message" id="message" name="message" required row="5">
+       
+        <button type="submit">Soumettre</button>
+        </form>
+        <div class="reponse"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
