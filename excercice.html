@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire</title>
+</head>
+<body>
+    <form action="page.php" method="post">
+        <fieldset><legend> Information personnelle</legend>
+   <br>Prénom:<input type="text" name="prenom">
+    <br>Nom:<input type="text" name="name">
+    <br>Date de naissance:<input type="date" name="date">
+     <br>Email:<input type="text" name="email">
+     <br>Mot de passe:<input type="password" name="mdp" value="pass">
+     <br> Genre:<input type="radio" name="se" value="masculin" checked>Masculin
+     <input type="radio" name="se" value="feminin">Féminin
+     <br>Pays:<select name="pays">
+        <option value="senegal">Sénégal</option>
+        <option value="mali">Mali</option>
+        <option value="gambie">Gambie</option>
+        <option value="mauritanie">Mauritanie</option>
+        <option value="guinée">Guinée Konakry</option>
+        </select>
+        <br>Hobbies:<select name="hobbies">
+            <option value=" football">Football</option>
+            <option value="basketball">Basketball</option>
+            <option value="lecture">Lecture</option>
+            <option value="danse">Danse</option>
+            <option value="chanter">Chanter</option>
+            <option value="nager">Nager</option>
+        </select>
+        <br><textarea name="mess" id="message" cols="30" rows="10">Votre message</textarea>
+
+
+</fieldset>
+</form>
+
+</body>
+</html>
