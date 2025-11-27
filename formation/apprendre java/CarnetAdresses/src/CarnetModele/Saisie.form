@@ -1,0 +1,251 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" resourceKey="Form.title"/>
+    <Property name="background" type="java.awt.Color" resourceKey="Form.background"/>
+    <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+              <Component id="photoLbl" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="prenomTfd" min="-2" pref="130" max="-2" attributes="0"/>
+              <EmptySpace pref="126" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="78" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="adresseLbl" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="rueTfd" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                          <Component id="validerBtn" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="villeTfd" alignment="0" min="-2" pref="210" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                      <Component id="jSeparator2" min="-2" pref="178" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="domicileLbl" min="-2" pref="60" max="-2" attributes="0"/>
+                          <Component id="travailLbl" min="-2" pref="60" max="-2" attributes="0"/>
+                          <Component id="courrielLbl" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="numDomicileTfd" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                          <Component id="numPortableTfd" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                          <Component id="courrielTfd" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="telephoneLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="nomTfd" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                          <Component id="jSeparator1" alignment="1" min="-2" pref="178" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <Component id="photoLbl" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Component id="prenomTfd" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="nomTfd" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jSeparator1" alignment="0" min="-2" pref="10" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      <Component id="telephoneLbl" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="domicileLbl" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="15" pref="15" max="15" attributes="0"/>
+                      <Component id="travailLbl" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="25" pref="25" max="25" attributes="0"/>
+                      <Component id="courrielLbl" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="numDomicileTfd" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="2" pref="2" max="2" attributes="0"/>
+                      <Component id="numPortableTfd" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="12" pref="12" max="12" attributes="0"/>
+                      <Component id="courrielTfd" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="rueTfd" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="adresseLbl" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="12" pref="12" max="12" attributes="0"/>
+              <Component id="villeTfd" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="validerBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JTextField" name="prenomTfd">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="prenomTfd.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="prenomTfd.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="prenomTfd.text"/>
+        <Property name="name" type="java.lang.String" value="prenomTfd" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="nomTfd">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="nomTfd.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="nomTfd.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="nomTfd.text"/>
+        <Property name="name" type="java.lang.String" value="nomTfd" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator1">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="numDomicileTfd">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="numDomicileTfd.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="numDomicileTfd.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="numDomicileTfd.text"/>
+        <Property name="name" type="java.lang.String" value="numDomicileTfd" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="numPortableTfd">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="numPortableTfd.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="numPortableTfd.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="numPortableTfd.text"/>
+        <Property name="name" type="java.lang.String" value="numPortableTfd" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="courrielTfd">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="courrielTfd.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="courrielTfd.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="courrielTfd.text"/>
+        <Property name="name" type="java.lang.String" value="courrielTfd" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSeparator" name="jSeparator2">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="rueTfd">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="rueTfd.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="rueTfd.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="rueTfd.text"/>
+        <Property name="name" type="java.lang.String" value="rueTfd" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="villeTfd">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="villeTfd.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="villeTfd.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="villeTfd.text"/>
+        <Property name="name" type="java.lang.String" value="villeTfd" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="validerBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="validerBtn.text"/>
+        <Property name="name" type="java.lang.String" value="validerBtn" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validerBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="telephoneLbl">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="telephoneLbl.text"/>
+        <Property name="name" type="java.lang.String" value="telephoneLbl" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="domicileLbl">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="domicileLbl.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="domicileLbl.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="domicileLbl.text"/>
+        <Property name="name" type="java.lang.String" value="domicileLbl" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="travailLbl">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="travailLbl.font"/>
+        <Property name="foreground" type="java.awt.Color" resourceKey="travailLbl.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="travailLbl.text"/>
+        <Property name="name" type="java.lang.String" value="travailLbl" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="courrielLbl">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="courrielLbl.text"/>
+        <Property name="name" type="java.lang.String" value="courrielLbl" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="adresseLbl">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="adresseLbl.text"/>
+        <Property name="name" type="java.lang.String" value="adresseLbl" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="photoLbl">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" resourceKey="photoLbl.icon"/>
+        <Property name="text" type="java.lang.String" resourceKey="photoLbl.text"/>
+        <Property name="name" type="java.lang.String" value="photoLbl" noResource="true"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>

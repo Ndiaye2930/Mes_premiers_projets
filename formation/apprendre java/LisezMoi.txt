@@ -1,0 +1,25 @@
+﻿/*
+#	Java Les fondamentaux
+#	A. Tasso
+#   	Mode d'emploi
+#	Fichier  : LisezMoi.txt
+*/
+
+
+
+Pour ouvrir les différents projets du répertoire FichiersDeTravail, vous devez :
+ - ouvrir NetBeans
+ - Sélectionner l'item Ouvrir un projet (Open Project) du menu Fichier (File)
+ - Rechercher sur la formation le répertoire FichiersDeTravail
+ - Sélectionner le projet que vous souhaitez ouvrir (symbolisé par une petite tasse de café)
+ - Valider votre choix en cliquant sur le bouton Ouvrir le projet (Open Project)
+
+
+Pour info :
+Les trois projets réalisés au cours de la formation sont situés dans le répertoire SourceExemples.
+Les fichiers sources sont entièrement commentés pour faciliter votre apprentissage.
+Les fichiers ressources, utilisés au cours du troisième projet (Carnet d'adresses) sont situés dans le répertoire ModelCarnet.
+
+
+Bonne formation !
+Anne Tasso

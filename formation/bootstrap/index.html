@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="dist/css/main.css"/>
+
+    <script type="application/javascript" src="dist/js/jquery-2.1.1.min.js"></script>
+    <script type="application/javascript" src="dist/js/bootstrap.min.js"></script>
+
+</head>
+<body data-spy="scroll" data-target="#mainmenu">
+
+    <nav id="mainmenu" class="navbar navbar-default navbar-fixed-top">
+
+        <div class="container">
+
+            <div class="nav-header">
+
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#monmenu">
+                    MENU
+                </button>
+
+                <a href="#" class="navbar-brand">LELOGO</a>
+
+            </div>
+
+            <div class="collapse navbar-collapse navbar-right" id="monmenu">
+
+                <form class="navbar-form navbar-left" action="">
+
+                    <div class="form-group">
+                        <input type="text" placeholder="Newsletter"/>
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Recevoir"/>
+
+                </form>
+
+                <ul class="nav navbar-nav">
+
+                    <li><a href="#diaporama">Diaporama</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Les membres <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Ajouter</a></li>
+                            <li><a href="#">Modifier</a></li>
+                            <li><a href="#">Supprimer</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Contact</a></li>
+                    <li id="moncompte"><a href="#"><span class="glyphicon glyphicon-user"></span> Mon compte <span class="badge">3</span></a></li>
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+
+    </nav>
+
+
+    <div class="container">
+
+        <div id="site" class="row">
+
+            <div id="content" class="col-xs-12 col-md-8">
+
+                <div class="row">
+
+                    <div id="filariane" class="col-xs-12">
+
+                        <ol class="breadcrumb">
+
+                            <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+                            <li><a href="#">Les membres</a></li>
+                            <li class="active">Ajouter un membre</li>
+
+                        </ol>
+
+                    </div><!-- #filariane -->
+
+                    <div class="col-xs-12">
+                        <h1>Titre 1</h1>
+                        <p class="bg-warning">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dolore eius laboriosam porro reprehenderit. Adipisci earum eius eos esse harum magnam nam necessitatibus nihil, odit porro, quaerat quod sequi voluptates!</p>
+                    </div>
+
+                    <div id="tableau" class="col-xs-12">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+
+                                <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Adresse mail</th>
+                                    <th>Code Postal</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr>
+                                    <td>Blanc</td>
+                                    <td>Michel</td>
+                                    <td>mb@aol.com</td>
+                                    <td>78000</td>
+                                </tr>
+                                <tr>
+                                    <td>Blanc <span class="label label-info pull-right">New</span></td>
+                                    <td>Michel</td>
+                                    <td>mb@aol.com</td>
+                                    <td>78000</td>
+                                </tr>
+                                <tr>
+                                    <td>Blanc</td>
+                                    <td>Michel</td>
+                                    <td>mb@aol.com</td>
+                                    <td class="info">78000</td>
+                                </tr>
+                                <tr>
+                                    <td>Blanc</td>
+                                    <td>Michel</td>
+                                    <td>mb@aol.com</td>
+                                    <td>78000</td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div><!-- #tableau -->
+
+                    <div id="buttons" class="col-xs-12 hidden-xs">
+
+                        <a href="#" class="btn btn-info btn-sm">Ajouter un membre</a>
+
+                        <button class="btn btn-warning btn-sm">Modifier un membre</button>
+
+                        <div class="btn-group">
+                            <button class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown">Supprimer un membre <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Valider</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Annuler</a></li>
+                            </ul>
+                        </div>
+
+                        <button data-target="#exportmodal" data-toggle="modal" class="btn btn-default pull-right btn-sm">Exporter</button>
+
+                    </div><!-- #buttons -->
+
+                    <div id="photos" class="col-xs-12">
+
+                        <div class="row">
+
+                            <div class="col-md-6 col-xs-6">
+                                <img src="img/1.jpg" alt="" class="img-responsive"/>
+                            </div>
+
+                            <div class="col-md-6 col-xs-6">
+                                <img src="img/2.jpg" alt="" class="img-responsive"/>
+                            </div>
+
+                        </div>
+
+                    </div><!-- #photos -->
+
+                    <div id="pagination" class="col-xs-12">
+
+                        <nav>
+
+                            <ul class="pager">
+
+                                <li class="previous disabled"><a href="#">Precedent</a></li>
+                                <li class="next"><a href="#">Suivant</a></li>
+
+                            </ul>
+
+                        </nav>
+
+                    </div><!-- #pagination -->
+
+                    <div id="articles" class="col-xs-12">
+
+                        <article>
+                            <h3><span data-toggle="tooltip" data-placement="right" title="Date : 12/01/14">Nouvel article</span></h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid deserunt molestiae officiis quis repellat saepe? Adipisci aliquid architecto laudantium nam provident. Beatae eveniet facere minima, neque tempore tenetur veritatis.
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aliquid amet, at beatae ea enim hic impedit magni necessitatibus nisi, odio odit pariatur, quasi rem saepe sed ut voluptates!
+                            </p>
+                        </article>
+
+                        <article>
+                            <h3><span data-toggle="popover" data-placement="right" data-content="Ici mon contenu !" title="Titre du popover">Deuxieme article</span></h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid deserunt molestiae officiis quis repellat saepe? Adipisci aliquid architecto laudantium nam provident. Beatae eveniet facere minima, neque tempore tenetur veritatis.
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aliquid amet, at beatae ea enim hic impedit magni necessitatibus nisi, odio odit pariatur, quasi rem saepe sed ut voluptates!
+                            </p>
+                        </article>
+
+                    </div><!-- #articles -->
+
+                    Ue plaque commémorative a été posée mercredi 26 novembre à la mémoire de Bernard Natan dans la cour de La Fémis, en présence de nombreuses personnalités du cinéma.
+                    Pour télécharger le dossier de presse, merci de cliquer sur le lien suivant :http://www.creationcorporate.com/Natan/Dossier-Presse-NatanOk-HD.pdf
+
+
+                    <div id="carousel" class="col-xs-12 bloc">
+
+                        <div id="diaporama" class="carousel slide">
+
+                            <div class="carousel-inner">
+
+                                <div class="item active">
+                                    <img src="img/5.jpg" alt=""/>
+                                </div>
+
+                                <div class="item">
+                                    <img src="img/6.jpg" alt=""/>
+                                </div>
+
+                                <div class="item">
+                                    <img src="img/7.jpg" alt=""/>
+                                </div>
+
+                                <div class="item">
+                                    <img src="img/8.jpg" alt=""/>
+                                </div>
+
+                            </div>
+
+                            <a class="left carousel-control" href="#diaporama" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#diaporama" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+
+                        </div>
+
+                        <div id="miniatures" class="row">
+
+                            <div class="col-md-3">
+                                <img data-target="#diaporama" data-slide-to="0" src="img/5.jpg" alt="" class="img-responsive"/>
+                            </div>
+
+                            <div class="col-md-3">
+                                <img data-target="#diaporama" data-slide-to="1" src="img/6.jpg" alt="" class="img-responsive"/>
+                            </div>
+
+                            <div class="col-md-3">
+                                <img data-target="#diaporama" data-slide-to="2" src="img/7.jpg" alt="" class="img-responsive"/>
+                            </div>
+
+                            <div class="col-md-3">
+                                <img data-target="#diaporama" data-slide-to="3" src="img/8.jpg" alt="" class="img-responsive"/>
+                            </div>
+
+                        </div>
+
+                    </div><!-- #carousel -->
+
+                </div>
+
+
+            </div><!-- #content -->
+
+            <div id="sidebar" class="col-md-4 col-xs-12 hidden-sm">
+
+                <div class="row">
+
+                    <div id="video" class="col-xs-12 bloc">
+
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <iframe src="//player.vimeo.com/video/109008765" class="embed-responsive-item" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/109008765">Formation vidéo 100 astuces pour iPhone et iPad avec iOS8 par Elephorm</a> from <a href="http://vimeo.com/elephorm">elephorm</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+                        </div>
+
+                    </div><!-- #video -->
+
+                    <div id="tabulation" class="col-xs-12 bloc">
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#apropos" data-toggle="tab">A propos</a></li>
+                            <li><a href="#contact" data-toggle="tab">Contact</a></li>
+                            <li><a href="#credits" data-toggle="tab">Credits</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+
+                            <div id="apropos" class="tab-pane active">
+                                <h4>A propos</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur ea ullam! Accusantium alias consectetur ex excepturi id illo iste nam nihil perspiciatis, placeat qui voluptate. Eos quisquam rerum voluptatum.</p>
+                            </div>
+
+                            <div id="contact" class="tab-pane">
+                                <h4>Contact</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur ea ullam! Accusantium alias consectetur ex excepturi id illo iste nam nihil perspiciatis, placeat qui voluptate. Eos quisquam rerum voluptatum.</p>
+                            </div>
+
+                            <div id="credits" class="tab-pane">
+                                <h4>Credits</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur ea ullam! Accusantium alias consectetur ex excepturi id illo iste nam nihil perspiciatis, placeat qui voluptate. Eos quisquam rerum voluptatum.</p>
+                            </div>
+
+                        </div>
+
+                    </div><!-- #tabulation -->
+
+                   <div id="collapse" class="col-xs-12 bloc">
+
+                       <div class="panel-group" id="collapsecontent">
+
+                           <div class="panel">
+
+                               <div class="panel-heading">
+                                   <h4>
+                                       <a href="#capropos" data-parent="#collapsecontent" data-toggle="collapse">A propos</a>
+                                   </h4>
+                               </div>
+
+                               <div id="capropos" class="panel-collapse collapse">
+
+                                   <div class="panel-body">
+
+                                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid delectus ea error, eum id magni molestiae officiis, quae quasi quis quod ratione recusandae rem repudiandae sint sunt tenetur vitae.</p>
+
+                                   </div>
+
+                               </div>
+
+                           </div>
+
+                           <div class="panel">
+
+                               <div class="panel-heading">
+                                   <h4>
+                                       <a href="#ccontact" data-parent="#collapsecontent" data-toggle="collapse">Contact</a>
+                                   </h4>
+                               </div>
+
+                               <div id="ccontact" class="panel-collapse collapse in">
+
+                                   <div class="panel-body">
+
+                                       <p>Amet, consectetur adipisicing elit. Aliquam aliquid delectus ea error, eum id magni molestiae officiis, quae quasi quis quod ratione recusandae rem repudiandae sint sunt tenetur vitae.</p>
+
+                                   </div>
+
+                               </div>
+
+                           </div>
+
+                           <div class="panel">
+
+                               <div class="panel-heading">
+                                   <h4>
+                                       <a href="#ccredits" data-parent="#collapsecontent" data-toggle="collapse">Credits</a>
+                                   </h4>
+                               </div>
+
+                               <div id="ccredits" class="panel-collapse collapse">
+
+                                   <div class="panel-body">
+
+                                       <p>Consectetur adipisicing elit. Aliquam aliquid delectus ea error, eum id magni molestiae officiis, quae quasi quis quod ratione recusandae rem repudiandae sint sunt tenetur vitae.</p>
+
+                                   </div>
+
+                               </div>
+
+                           </div>
+
+
+                       </div>
+
+
+                   </div><!-- #collapse -->
+
+
+                </div>
+
+            </div><!-- #sidebar -->
+
+        </div><!-- #site -->
+
+    </div>
+
+<div id="exportmodal" class="modal fade">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <button class="close" data-dismiss="modal">X</button>
+
+                <h4 class="modal-title">Valider l'exportation</h4>
+
+            </div>
+
+            <div class="modal-body">
+
+                Ici votre contenu
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-success">Exporter</button>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div><!-- #exportmodal -->
+
+    <script type="application/javascript">
+
+        $(document).ready(function(){
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('[data-toggle="popover"]').popover();
+
+        });
+
+    </script>
+
+</body>
+</html>

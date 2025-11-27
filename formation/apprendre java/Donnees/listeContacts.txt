@@ -1,0 +1,5 @@
+Tom;P.;../Photos/photo1.png;01 05 04 03 02;06 05 04 03 02;tom@fai.fr;24 av du Papillon; 75010 Paris
+Elsa;S.;../Photos/photo4.png;01 15 14 13 12;06 15 14 13 12;elsa@fai.fr;7 rue du Paradis;75012 Paris
+Adele;T.;../Photos/photo2.png;01 25 24 23 22;06 25 24 23 22;adele@fai.fr;22 rue des Cerises;75005 Paris
+Lulu;R.;../Photos/photo5.png;01 55 54 33 32;06 35 34 33 32;lulu@fai.fr;13 rue des Peches;75010 Paris
+Margo;L.;../Photos/photo3.png;01 35 34 33 32;06 35 34 33 32;Margo@fai.fr;18 av des escargots;75012 Paris
