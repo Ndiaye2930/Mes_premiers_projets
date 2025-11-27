@@ -1,0 +1,9 @@
+header{
+    border: 1px red  dashed; width: 400px; height: 150px;
+}
+ol{
+    margin: 5px;
+}
+div{
+    border: 1px black solid; width: 500px;
+}
