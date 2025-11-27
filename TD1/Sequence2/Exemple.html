@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les nouveaux élements et attributs du formulaire en HTML5</title>
+</head>
+<body>
+    <h1>Les nouveaux élements et attributs du formulaire</h1>
+    <form action="Test.php" method="get">
+        <label for="">Ville:</label>
+        <input list="ville" type="text" name="ville" id="">
+        <datalist id="ville">
+            <option value="Dakar"/>
+            <option value="Saint-Louis"/>
+            <option value="Fatick"/>
+            <option value="Kaolack"/>
+            <option value="Louga"/>
+        </datalist>
+        <br><br>
+        <label for="">login</label>
+        <input type="text" name="login">
+        <!--
+        <label for="">Cryptage</label>
+        <keyzen name="securite"></keyzen>--> <br><br>
+        <input type="submit" value="envoyer">
+    </form>
+</body>
+</html>

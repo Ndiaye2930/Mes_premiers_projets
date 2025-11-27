@@ -1,0 +1,30 @@
+<?xml version ="1.0">
+<cv>
+    <header> 
+            <prenom>Camille</prenom>
+            <nom>Dubois</nom>
+            <adresse>Paris, France</adresse>
+            <email>camilledubois4@gmail.com</email>
+            <tel>06 06 06 06 06</tel>
+            <subject>Recherche d'emploi</subject>
+            <profil>Développeur web expérimenté, je suis dynamique et j'aime travailler en équipe pour relever des 
+            challenges techniques. J'ai une bonne maitrise des outils de développemnet et je suis en constante recherche
+            d'apprentissage. Découvrez-en plus sur mon profil lors d'une rencontre.</profil>
+    </header>
+    <section>
+             <formation>2011-2012: LP développeur web et multimédia - Université de Cergny-Pontoise-Paris
+             2009-2011: DUT en informatique BAC+2-IUT d'Orsay-Paris</formation>
+             <expérience> De avril 2018 à nos jours:Conception et architecture de l'application basée sur une solution Angular, développement 
+             des composants d'angular, création de services pour communiquer avec les API, Mise en place du mécanisme d'enchainemment
+             et de persistance des données saisies, gestion des accés aux pages et erreurs techniques.
+             De novembre 2015 à mars 2018:développement front-end d'une trentaine de sites internet, webdesign (moodboard,
+             schémas conceptuels, déclinaisons mobile, maquette...), relation avec les clients.</expérience>
+             <compétence>Langage de programmation: HTML, CSS, JS, PHP, Ruby, Python, C++.</compé<tence>
+             <loisir>Voyages, Cinéma, Cyclisme, Technologie, Football.</loisir>
+             <qualité>Fiable et rigoureux, réactif et toujours à la pointe des dernières technologies, enthousiasme
+             et curieux, Team player et orienté solutions.</qualité>
+             <langue>Français, Anglais</Espagnol>
+
+
+    </section>
+</cv>

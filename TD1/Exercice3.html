@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>formulaire</title>
+</head>
+<body>
+    <form action="php">
+        <fieldset>
+            <legend>Date de livraison</legend>
+            Choissisez la date: <input type="date">
+            <label for="date"></label>
+        </fieldset>
+    </form>
+    <form action="php">
+        <fieldset>
+            <legend>Votre identité</legend>
+            <ol>
+                <li>Nom: <input type="nom"></li>
+                 <li>Email: <input type="mail"></li>
+                 <label for="mail"></label>
+                <li>Téléphone: <input type="number"></li> 
+                <label for="number"></label>
+                 </fieldset>
+            </ol>
+            <form action="php">
+                <fieldset>
+                <legend>Adresse de livraison</legend>
+                
+                <ol>
+                    <li>Adresse:<textarea name="adresse" id="" cols="25" rows="2"></textarea></li>
+                    <li>Code postale: <input type="text"></li>
+                    <li>Ville: <select name="ville">
+                        <option value="pikine">PIKINE</option>
+                        <option value="dakar">Dakar</option>
+                        <option value="rufisque">Rufisque</option>
+                    </select></li>
+                </ol>
+            </form>
+        </fieldset>
+    </form>
+    <form action="php">
+        <fieldset>
+        <legend>Information CB</legend>
+        <ol>
+            <li><fieldset><legend>Type de carte bancaire</legend>    
+            <ol><li><input type="radio">VISA</li>
+                <li><input type="radio">AmEx</li>
+                <li><input type="radio">Mastercard</fieldset></li>
+                <li>N° de carte<input type="number"></li>
+            <li>Code de sécurité: <input type="password"></li>
+            <label for="password"></label>
+        </ol>  
+            </ol></li>
+        </fieldset>
+    </form>
+    <fieldset>
+        <input type="submit" value="J'achéte">
+    </fieldset>
+</body>
+</html>

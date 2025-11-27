@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les formulaires en HTML5</title>
+</head>
+<body>
+    <form action=""> 
+        <fieldset>
+            <legend>Date de livraison</legend>
+            <label for="date">Choisissez la date</label>
+            <input type="date" name="date" id="date">
+        </fieldset>
+        <fieldset>
+            <legend>Votre identité</legend>
+            <ol>
+                <li>
+                    <label for="nom">Nom</label>
+                    <input type="text" placeholder="Prénom et Nom">
+                </li>
+                <li>
+                    <label for="email">Email</label>
+                    <input type="text" placeholder="exemple@gmail.com">
+                </li>
+                <li>
+                    <label for="Téléphone">Téléphone</label>
+                    <input type="phone" placeholder="ex +221 77 777 77 77">
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset>
+            <legend>Adresse de livraison</legend>
+            <ol>
+                <li><label for="">Adresse</label> 
+                <input type="text"><textarea name="Votre adresse de livraison" id="" cols="25" rows="3"></textarea></li>
+                <li><label for="code">Code postale</label>
+                <input type="number"></li>
+                <li><label for="ville">Ville</label>
+                 <li><select name="ville" id="ville">
+                    <option value="Dakar">Dakar</option>
+                    <option value="Thies">Thiés</option>
+                    <option value="saint-louis">Saint-Louis</option>
+                    <option value="Louga">Louga</option>
+                 </select></li>
+            </ol>
+        </fieldset>
+        <fieldset>
+            <legend>Information CB</legend>
+            <ol>
+                <li><fieldset><legend>Type de carte bancaire</legend>    
+                <ol><li><input type="radio">VISA</li>
+                    <li><input type="radio">AmEx</li>
+                    <li><input type="radio">Mastercard</fieldset></li>
+                    <li>N° de carte<input type="number"></li>
+                <li>Code de sécurité: <input type="password"></li>
+                <label for="password"></label>
+            </ol>  
+                </ol></li>
+            </fieldset>
+        <fieldset>
+            <input type="submit" value="J'achéte">
+        
+        
+       
+</body>
+</html>
