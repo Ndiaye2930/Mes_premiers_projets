@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid mt-4">
+  <h2>Dashboard Chef Service</h2>
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><i class="bi bi-check2-square"></i> Validation Agent</h5>
+          <p class="card-text">Superviser le travail des agents et valider leurs actions.</p>
+          <a href="#" class="btn btn-light btn-sm">Valider</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card text-white bg-success mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><i class="bi bi-pencil-square"></i> Signatures</h5>
+          <p class="card-text">Signer électroniquement les documents validés.</p>
+          <a href="#" class="btn btn-light btn-sm">Signer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

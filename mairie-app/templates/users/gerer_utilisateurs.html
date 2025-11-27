@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+    
+    <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
+        <h3 class="fw-bold text-dark"><i class="bi bi-people-fill text-primary me-2"></i> Gestion des utilisateurs</h3>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" onclick="window.print()">
+                <i class="bi bi-printer"></i> Imprimer
+            </button>
+
+            <a href="{% url 'export_users_csv' %}" class="btn btn-outline-info">
+                <i class="bi bi-file-earmark-spreadsheet-fill"></i> Export CSV
+            </a>
+
+            <a href="{% url 'export_users_pdf' %}" class="btn btn-outline-danger">
+                <i class="bi bi-file-earmark-pdf-fill"></i> Export PDF
+            </a>
+
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdd">
+                <i class="bi bi-person-plus-fill"></i> Nouvel utilisateur
+            </button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            
+            <form method="get" class="mb-4">
+                <div class="input-group input-group-lg">
+                    <input type="text" name="search" value="{{ search }}" class="form-control"
+                            placeholder="Rechercher : nom, prénom, username, email...">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Rechercher</button>
+                    {% if search %}
+                        <a href="{% url 'gerer_utilisateurs' %}" class="btn btn-outline-secondary">
+                             <i class="bi bi-x-circle-fill"></i> Annuler
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+
+            {% if not users %}
+                <div class="alert alert-info text-center" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i> Aucun utilisateur trouvé.
+                </div>
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle table-striped" id="usersTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Photo</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th class="text-center">Rôle</th>
+                            <th width="120px" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr id="row-{{ u.id }}">
+                            <td class="text-center">
+                                {% if u.photo %}
+                                    <img src="{{ u.photo.url }}" width="45" height="45" class="rounded-circle object-fit-cover border border-secondary">
+                                {% else %}
+                                    <i class="bi bi-person-circle fs-3 text-secondary"></i>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ u.nom }}</td>
+                            <td>{{ u.prenom }}</td>
+                            <td>{{ u.username }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{{ u.telephone|default:"-" }}</td>
+                            
+                            <td class="text-center">
+                                {% if u.role == 'SuperAdmin' %}
+                                    <span class="badge bg-danger">SuperAdmin</span>
+                                {% elif u.role == 'ChefService' %}
+                                    <span class="badge bg-warning text-dark">Chef de Service</span>
+                                {% elif u.role == 'ResponsableAdmin' %}
+                                    <span class="badge bg-info">Resp. Administration</span>
+                                {% elif u.role == 'AgentEC' %}
+                                    <span class="badge bg-primary">Agent État Civil</span>
+                                {% elif u.role == 'AgentFinances' %}
+                                    <span class="badge bg-success">Agent Finances</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ u.get_role_display }}</span>
+                                {% endif %}
+                            </td>
+
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-sm btn-outline-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEdit{{ u.id }}"
+                                        title="Modifier">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalDelete{{ u.id }}"
+                                        title="Supprimer">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <div class="modal fade" id="modalEdit{{ u.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ u.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+
+                                    <div class="modal-header bg-primary text-white">
+                                        <h5 class="modal-title" id="editModalLabel{{ u.id }}">
+                                            <i class="bi bi-person-gear me-2"></i> Modifier utilisateur: {{ u.username }}
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <form method="post" enctype="multipart/form-data">
+                                        <div class="modal-body">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="user_id" value="{{ u.id }}">
+                                            
+                                            {% comment %} 
+                                            Si vous utilisez un dictionnaire de formulaires: {{ form_edits|key:u.id }} 
+                                            Ou si vous passez le formulaire spécifique `form_edit_u`
+                                            {% endcomment %}
+                                            
+                                            {% for field in form_edit %}
+                                                <div class="mb-3">
+                                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                                    {{ field }}
+                                                    {% if field.help_text %}
+                                                        <div class="form-text">{{ field.help_text }}</div>
+                                                    {% endif %}
+                                                    {% for error in field.errors %}
+                                                        <div class="alert alert-danger mt-1 p-1 small">{{ error }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endfor %}
+
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                            <button name="edit" type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="modalDelete{{ u.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ u.id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="deleteModalLabel{{ u.id }}"><i class="bi bi-exclamation-triangle-fill me-2"></i> Confirmation suppression</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        Voulez-vous vraiment supprimer l'utilisateur <b>{{ u.username }}</b> ({{ u.nom }} {{ u.prenom }}) ? Cette action est irréversible.
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <button type="button" class="btn btn-danger delete-user" data-id="{{ u.id }}">
+                                            <i class="bi bi-trash-fill"></i> Supprimer définitivement
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <nav class="mt-4 d-flex justify-content-center">
+                <ul class="pagination pagination-sm shadow-sm">
+                    {% if users.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ users.previous_page_number }}&search={{ search }}">Précédent</a>
+                        </li>
+                    {% endif %}
+
+                    {% for p in users.paginator.page_range %}
+                        {% if users.number == p %}
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{ p }}</span>
+                            </li>
+                        {% elif p > users.number|add:'-3' and p < users.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ p }}&search={{ search }}">{{ p }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if users.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ users.next_page_number }}&search={{ search }}">Suivant</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="addModalLabel"><i class="bi bi-person-plus-fill me-2"></i> Ajouter un utilisateur</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% for field in form_add %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <div class="form-text">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger mt-1 p-1 small">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button name="create" type="submit" class="btn btn-primary">Créer l'utilisateur</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.querySelectorAll(".delete-user").forEach(btn => {
+    btn.addEventListener("click", function() {
+        let id = this.dataset.id;
+        
+        // Cacher la modal de confirmation
+        let deleteModalElement = document.getElementById("modalDelete" + id);
+        let deleteModalInstance = bootstrap.Modal.getInstance(deleteModalElement);
+        if (deleteModalInstance) {
+             deleteModalInstance.hide();
+        }
+
+        fetch("{% url 'gerer_utilisateurs' %}", { // Assurez-vous que l'URL est correcte
+            method: "POST",
+            headers: { 
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value // Important pour AJAX
+            },
+            body: JSON.stringify({ 'id': id, 'action': 'delete' }) 
+        })
+        .then(r => r.json())
+        .then(data => {
+            if(data.status === "success"){
+                document.getElementById("row-" + id).remove();
+            } else {
+                alert("Erreur lors de la suppression: " + (data.message || "Unknown error"));
+            }
+        })
+        .catch(error => console.error('Erreur:', error));
+    });
+});
+</script>
+
+{% endblock %}

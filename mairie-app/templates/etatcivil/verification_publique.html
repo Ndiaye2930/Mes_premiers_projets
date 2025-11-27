@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+ 
+<div class="container-fluid mt-4">
+    
+    <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
+        <h3 class="fw-bold text-dark"><i class="bi bi-patch-check-fill text-primary me-2"></i> Vérification publique des documents</h3>
+    </div>
+
+    <div class="card shadow-sm p-4 mb-4">
+        <div class="card-body">
+            <h5 class="card-title text-muted mb-3"><i class="bi bi-fingerprint me-2"></i> Entrez le code unique du document</h5>
+            
+            <form method="GET" class="row g-3">
+                <div class="col-md-9">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-light"><i class="bi bi-qr-code"></i></span>
+                        <input type="text" name="code" class="form-control" 
+                               placeholder="Ex: 2025-MAR-12345" value="{{ query }}" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100 btn-lg shadow-sm" type="submit">
+                        <i class="bi bi-search"></i> Vérifier le document
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if query %}
+        <div class="results-area">
+            {% if resultat %}
+                <div class="card border-primary shadow-lg">
+                    <div class="card-header bg-primary text-white fw-bold h5">
+                        <i class="bi bi-check-circle-fill me-2"></i> Document certifié et valide !
+                    </div>
+                    <div class="card-body row">
+                        
+                        <div class="col-md-8">
+                            <h4 class="text-primary mb-3">Détails du document:</h4>
+                            <p class="mb-1"><strong>Type de Document :</strong> <span class="fw-medium">{{ resultat.type_document|default:"N/A" }}</span></p>
+                            <p class="mb-1"><strong>Numéro du Registre :</strong> <span class="fw-medium">{{ resultat.numero|default:"N/A" }}</span></p>
+                            <p class="mb-1"><strong>Année du Registre :</strong> <span class="fw-medium">{{ resultat.annee|default:"N/A" }}</span></p>
+                            <p class="mb-1"><strong>Délivré le :</strong> <span class="fw-medium">{{ resultat.date_delivrance|date:"d F Y"|default:"N/A" }}</span></p>
+                            
+                            <hr>
+                            <p class="text-muted small">
+                                Cette vérification confirme l'authenticité des données enregistrées par la Mairie.
+                            </p>
+                        </div>
+                        
+                        {% if qr_b64 %}
+                        <div class="col-md-4 text-center border-start">
+                            <p class="text-muted small mb-2">Code de vérification :</p>
+                            <div class="p-3 border d-inline-block rounded bg-white shadow-sm">
+                                <img src="data:image/png;base64,{{ qr_b64 }}" alt="QR Code de vérification" width="150" height="150">
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-danger shadow-sm py-4" role="alert">
+                    <h4 class="alert-heading"><i class="bi bi-x-octagon-fill me-2"></i> Document non trouvé ou code invalide</h4>
+                    <p>
+                        Le code **{{ query }}** n'a retourné aucun document correspondant dans notre base de données. Veuillez vérifier le code et réessayer.
+                    </p>
+                    <hr>
+                    <p class="mb-0 small">
+                        Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le service d'état civil.
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+ 
+{% endblock %}

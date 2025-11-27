@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+    
+    <h2 class="mb-4 fw-bold text-dark border-bottom pb-2">
+        <i class="bi bi-gear-fill text-primary me-2"></i> Paramètres de la Mairie
+    </h2>
+
+    <div class="card shadow-lg p-4">
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h5 class="mb-3 text-primary border-bottom pb-1"><i class="bi bi-person-badge-fill me-2"></i> Identité Institutionnelle</h5>
+
+            <div class="row mb-3">
+                
+                <div class="col-md-6 mb-3">
+                    {{ form.nom_mairie.label_tag }} 
+                    {{ form.nom_mairie }}
+                    {% if form.nom_mairie.errors %}<div class="text-danger small">{{ form.nom_mairie.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    {{ form.nom_maire.label_tag }} 
+                    {{ form.nom_maire }}
+                    {% if form.nom_maire.errors %}<div class="text-danger small">{{ form.nom_maire.errors }}</div>{% endif %}
+                </div>
+            </div>
+            
+            <h5 class="mb-3 text-primary border-bottom pb-1"><i class="bi bi-map-fill me-2"></i> Localisation Administrative</h5>
+
+            <div class="row mb-3">
+                
+                <div class="col-md-4 mb-3">
+                    {{ form.commune.label_tag }} 
+                    {{ form.commune }}
+                    {% if form.commune.errors %}<div class="text-danger small">{{ form.commune.errors }}</div>{% endif %}
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    {{ form.departement.label_tag }} 
+                    {{ form.departement }}
+                    {% if form.departement.errors %}<div class="text-danger small">{{ form.departement.errors }}</div>{% endif %}
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    {{ form.region.label_tag }} 
+                    {{ form.region }}
+                    {% if form.region.errors %}<div class="text-danger small">{{ form.region.errors }}</div>{% endif %}
+                </div>
+            </div>
+
+            <h5 class="mb-3 text-primary border-bottom pb-1"><i class="bi bi-headset me-2"></i> Coordonnées de Contact</h5>
+
+            <div class="row mb-3">
+                
+                <div class="col-md-6 mb-3">
+                    {{ form.adresse.label_tag }} 
+                    {{ form.adresse }}
+                    {% if form.adresse.errors %}<div class="text-danger small">{{ form.adresse.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    {{ form.telephone.label_tag }} 
+                    {{ form.telephone }}
+                    {% if form.telephone.errors %}<div class="text-danger small">{{ form.telephone.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    {{ form.email.label_tag }} 
+                    {{ form.email }}
+                    {% if form.email.errors %}<div class="text-danger small">{{ form.email.errors }}</div>{% endif %}
+                </div>
+            </div>
+
+            <h5 class="mb-3 text-primary border-bottom pb-1"><i class="bi bi-globe me-2"></i> Web et Slogan</h5>
+
+            <div class="row mb-3">
+                
+                <div class="col-md-6 mb-3">
+                    {{ form.site_web.label_tag }} 
+                    {{ form.site_web }}
+                    {% if form.site_web.errors %}<div class="text-danger small">{{ form.site_web.errors }}</div>{% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    {{ form.slogan.label_tag }} 
+                    {{ form.slogan }}
+                    {% if form.slogan.errors %}<div class="text-danger small">{{ form.slogan.errors }}</div>{% endif %}
+                </div>
+            </div>
+
+            <h5 class="mb-3 text-primary border-bottom pb-1"><i class="bi bi-image-fill me-2"></i> Logo Institutionnel</h5>
+
+            <div class="mb-3">
+                {{ form.logo.label_tag }}
+                {{ form.logo }}
+                {% if form.logo.errors %}<div class="text-danger small">{{ form.logo.errors }}</div>{% endif %}
+                
+                {% if parametre and parametre.logo %}
+                    <p class="text-muted small mt-3 mb-1">Logo actuel :</p>
+                    <div class="mt-2 p-2 border d-inline-block rounded bg-white shadow-sm">
+                        <img src="{{ parametre.logo.url }}" alt="Logo mairie" width="100" class="img-fluid rounded">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="d-flex justify-content-end pt-3">
+                <button type="submit" class="btn btn-primary btn-lg shadow">
+                    <i class="bi bi-save-fill me-2"></i> Enregistrer les Paramètres
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+{% endblock %}

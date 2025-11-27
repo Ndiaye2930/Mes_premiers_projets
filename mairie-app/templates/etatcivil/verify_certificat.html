@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Vérification de certificat</h3>
+  <table class="table">
+    <tr><th>Type</th><td>{{ cert.get_type_certificat_display }}</td></tr>
+    <tr><th>Nom</th><td>{{ cert.nom }}</td></tr>
+    <tr><th>Prénom</th><td>{{ cert.prenom }}</td></tr>
+    <tr><th>Statut</th><td>{{ cert.statut }}</td></tr>
+    <tr><th>Date</th><td>{{ cert.created_at }}</td></tr>
+  </table>
+</div>
+{% endblock %}

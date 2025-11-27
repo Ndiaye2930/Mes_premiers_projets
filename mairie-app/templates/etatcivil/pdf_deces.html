@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+    body {
+        font-family: DejaVu Sans, sans-serif;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    .header {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .header h2 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .header h3 {
+        margin: 0;
+        font-size: 15px;
+        text-decoration: underline;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    th, td {
+        border:1px solid #333;
+        padding: 6px;
+        font-size: 12px;
+    }
+    .qr {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        text-align:center;
+    }
+    .footer {
+        margin-top: 30px;
+        font-size: 11px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>RÉPUBLIQUE DU SÉNÉGAL</h2>
+    <div>Un Peuple – Un But – Une Foi</div>
+    <h3>ACTE DE DÉCÈS</h3>
+    <div>N° {{ acte.numero }}/{{ acte.annee }}</div>
+</div>
+
+<table>
+    <tr>
+        <th>Nom</th>
+        <td>{{ acte.nom }}</td>
+    </tr>
+    <tr>
+        <th>Prénom</th>
+        <td>{{ acte.prenom }}</td>
+    </tr>
+    <tr>
+        <th>Sexe</th>
+        <td>{{ acte.get_sexe_display }}</td>
+    </tr>
+    <tr>
+        <th>Date du décès</th>
+        <td>{{ acte.date_deces }}</td>
+    </tr>
+    <tr>
+        <th>Lieu du décès</th>
+        <td>{{ acte.lieu_deces }}</td>
+    </tr>
+    <tr>
+        <th>Cause du décès</th>
+        <td>{{ acte.cause_deces }}</td>
+    </tr>
+    <tr>
+        <th>Déclarant</th>
+        <td>{{ acte.declarant }}</td>
+    </tr>
+</table>
+
+<div class="footer">
+    <p>Certifié conforme au registre de l'état civil.</p>
+    <p>Fait à ______________________, le ____________</p>
+    <p>Officier de l'État Civil : ____________________________</p>
+</div>
+
+<div class="qr">
+    <img src="data:image/png;base64,{{ qr_b64 }}" width="120">
+    <div style="font-size:10px;">Scan pour vérification</div>
+</div>
+
+</body>
+</html>

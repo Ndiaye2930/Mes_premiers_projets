@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+    
+    <div class="alert alert-light border-start border-primary border-5 p-3 mb-4 shadow-sm" role="alert">
+        <h2 class="mb-0 fw-bold text-dark">
+            <i class="bi bi-house-door-fill text-primary me-2"></i> Bienvenue, <span class="text-primary">{{ user.username }}</span>
+        </h2>
+        <p class="mb-0 text-muted small">Tableau de bord de gestion de l'État Civil.</p>
+    </div>
+
+    <div class="row g-4">
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-primary border-2">
+                <div class="card-body">
+                    <i class="bi bi-people-fill display-4 text-primary opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Utilisateurs</h5>
+                    <p class="card-text text-muted">Ajouter, modifier ou supprimer des agents et gérer les rôles.</p>
+                    <a href="{% url 'gerer_utilisateurs' %}" class="btn btn-primary btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-person-gear"></i> Gérer
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-success border-2">
+                <div class="card-body">
+                    <i class="bi bi-bar-chart-line-fill display-4 text-success opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Statistiques</h5>
+                    <p class="card-text text-muted">Rapports globaux, indicateurs clés et tendances.</p>
+                    <a href="# " class="btn btn-success btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-eye"></i> Voir les rapports
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-warning border-2">
+                <div class="card-body">
+                    <i class="bi bi-gear-fill display-4 text-warning opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Paramètres</h5>
+                    <p class="card-text text-muted">Configurer les modules, règles et informations de la Mairie.</p>
+                    <a href="# " class="btn btn-warning btn-sm mt-2 shadow-sm text-dark">
+                        <i class="bi bi-pencil-square"></i> Modifier
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-info border-2">
+                <div class="card-body">
+                    <i class="bi bi-journal-bookmark-fill display-4 text-info opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Registres</h5>
+                    <p class="card-text text-muted">Gestion de la numérotation automatique avancée des actes.</p>
+                    <a href="{% url 'registres_list' %}" class="btn btn-info btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-list-columns-reverse"></i> Gérer
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-info border-2">
+                <div class="card-body">
+                    <i class="bi bi-file-earmark-person-fill display-4 text-info opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Actes de Naissance</h5>
+                    <p class="card-text text-muted">Enregistrer et gérer les déclarations et actes de naissance.</p>
+                    <a href="{% url 'actes_naissance' %}" class="btn btn-info btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-pencil"></i> Gérer
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-danger border-2">
+                <div class="card-body">
+                    <i class="bi bi-file-earmark-heart-fill display-4 text-danger opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Actes de Mariage</h5>
+                    <p class="card-text text-muted">Enregistrer et gérer les publications et actes de mariage.</p>
+                    <a href="{% url 'actes_mariage' %}" class="btn btn-danger btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-pencil"></i> Gérer
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-secondary border-2">
+                <div class="card-body">
+                    <i class="bi bi-file-earmark-x-fill display-4 text-secondary opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Actes de Décès</h5>
+                    <p class="card-text text-muted">Enregistrer et gérer les déclarations et actes de décès.</p>
+                    <a href="{% url 'actes_deces' %}" class="btn btn-secondary btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-pencil"></i> Gérer
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-dark border-2">
+                <div class="card-body">
+                    <i class="bi bi-file-text-fill display-4 text-dark opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Certificats & Extraits</h5>
+                    <p class="card-text text-muted">Gérer les demandes et délivrer les différents certificats.</p>
+                    <a href="{% url 'certificats_list' %}" class="btn btn-dark btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-journal-check"></i> Gérer
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card h-100 text-center shadow-lg border-primary border-2">
+                <div class="card-body">
+                    <i class="bi bi-search-heart-fill display-4 text-primary opacity-75"></i>
+                    <h5 class="card-title mt-3 fw-bold text-dark">Vérification Publique</h5>
+                    <p class="card-text text-muted">Vérifier l'authenticité de tout document via code de sécurité.</p>
+                    <a href="{% url 'verification_publique' %}" class="btn btn-primary btn-sm mt-2 shadow-sm">
+                        <i class="bi bi-patch-check"></i> Vérifier
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

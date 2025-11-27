@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Acte de Naissance - {{ acte.nom }} {{ acte.prenom }}</title>
+    <style>
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            margin: 40px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .info {
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 12px;
+        }
+        .qr {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .qr img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>République du Sénégal</h1>
+    <h2>Acte de Naissance</h2>
+
+    <div class="info">
+        <p><strong>Numéro :</strong> {{ acte.numero }}/{{ acte.annee }}</p>
+        <p><strong>Nom :</strong> {{ acte.nom }}</p>
+        <p><strong>Prénom :</strong> {{ acte.prenom }}</p>
+        <p><strong>Sexe :</strong> {{ acte.get_sexe_display }}</p>
+        <p><strong>Date de naissance :</strong> {{ acte.date_naissance|date:"d/m/Y" }}</p>
+        <p><strong>Lieu de naissance :</strong> {{ acte.lieu_naissance }}</p>
+        <p><strong>Nom de la mère :</strong> {{ acte.nom_mere }}</p>
+        <p><strong>Nom du père :</strong> {{ acte.nom_pere }}</p>
+        <p><strong>Déclarant :</strong> {{ acte.declarant }}</p>
+        <p><strong>Statut :</strong> {{ acte.statut }}</p>
+        <p><strong>Code de vérification :</strong> {{ acte.code_verification }}</p>
+    </div>
+
+    {% if acte.qr_code %}
+    <div class="qr">
+    <img src="data:image/png;base64,{{ qr_b64 }}" width="100"/>
+    </div>
+    {% endif %}
+
+    <div class="footer">
+        Ce document a été généré automatiquement par le système de la mairie.
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body{ font-family: DejaVu Sans, sans-serif; font-size: 12px; }
+    .header{ text-align:center; margin-bottom: 10px; }
+    table{ width:100%; border-collapse: collapse; }
+    th, td{ border:1px solid #000; padding:6px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>République du Sénégal</h2>
+    <h3>Acte de Mariage — {{ acte.numero }}/{{ acte.annee }}</h3>
+  </div>
+
+  <table>
+    <tr><th>Epoux</th><td>{{ acte.epoux_nom }} {{ acte.epoux_prenom }}</td></tr>
+    <tr><th>Epouse</th><td>{{ acte.epouse_nom }} {{ acte.epouse_prenom }}</td></tr>
+    <tr><th>Date</th><td>{{ acte.date_mariage }}</td></tr>
+    <tr><th>Lieu</th><td>{{ acte.lieu_mariage }}</td></tr>
+    <tr><th>Officier</th><td>{{ acte.officier }}</td></tr>
+    <tr><th>Temoins</th><td>{{ acte.temoins|linebreaksbr }}</td></tr>
+  </table>
+
+  <div style="position:fixed; bottom:20px; right:20px; text-align:center;">
+    <div>Vérifier : </div>
+    <img src="data:image/png;base64,{{ qr_b64 }}" alt="QR" width="100"/>
+  </div>
+</body>
+</html>

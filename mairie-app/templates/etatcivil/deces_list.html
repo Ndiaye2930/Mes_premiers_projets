@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    
+    <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
+        <h3 class="fw-bold text-dark mb-0">
+            <i class="bi bi-file-earmark-spreadsheet-fill text-dark me-2"></i> Gestion des Actes de Décès
+        </h3>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" onclick="window.print()">
+                <i class="bi bi-printer me-1"></i> Imprimer
+            </button>
+
+            <a href="{% url 'export_deces_csv' %}" class="btn btn-outline-info">
+                <i class="bi bi-file-earmark-spreadsheet-fill me-1"></i> Export CSV
+            </a>
+
+            <a href="{% url 'export_deces_pdf_list' %}" class="btn btn-outline-danger">
+                <i class="bi bi-file-earmark-pdf-fill me-1"></i> PDF Liste
+            </a>
+
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                <i class="bi bi-file-plus-fill me-1"></i> Enregistrer un acte
+            </button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            
+            <form class="mb-4" method="get">
+                <div class="input-group input-group-lg shadow-sm">
+                    <span class="input-group-text bg-light text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" name="search" value="{{ search }}"
+                           placeholder="Rechercher par nom, prénom, numéro d'acte...">
+                    <button class="btn btn-primary" type="submit">Rechercher</button>
+                    {% if search %}
+                        <a href="{% url 'gerer_deces' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle-fill"></i> Annuler
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+
+            {% if not actes %}
+                <div class="alert alert-info text-center py-3" role="alert">
+                    <i class="bi bi-info-circle-fill me-2 fs-5"></i> Aucun acte de décès trouvé.
+                </div>
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th scope="col">N°/Année</th>
+                            <th scope="col">Nom & Prénom</th>
+                            <th scope="col">Date décès</th>
+                            <th scope="col">Lieu</th>
+                            <th scope="col" class="text-center">Statut</th>
+                            <th scope="col" width="180px" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for a in actes %}
+                    <tr id="row-{{ a.id }}">
+                        <td class="fw-bold">{{ a.numero }}/{{ a.annee }}</td>
+                        <td class="fw-medium">{{ a.nom }} {{ a.prenom }}</td>
+                        <td>{{ a.date_deces|date:"d/m/Y" }}</td>
+                        <td>{{ a.lieu_deces }}</td>
+                        
+                        <td class="text-center">
+                            {% if a.statut == "Validé" %}
+                                <span class="badge bg-success py-2">Validé</span>
+                            {% elif a.statut == "Refusé" %}
+                                <span class="badge bg-danger py-2">Refusé</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark py-2">En attente</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm" role="group">
+                                
+                                <a href="{% url 'acte_deces_pdf' a.id %}" class="btn btn-sm btn-dark" title="Générer PDF de l'acte">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+                                </a>
+
+                                {% if user.role == "SuperAdmin" or user.role == "ChefService" %}
+                                {% if a.statut != "Validé" %}
+                                <a href="{% url 'valider_deces' a.id %}" class="btn btn-sm btn-success" title="Valider l'acte">
+                                    <i class="bi bi-check2-square"></i>
+                                </a>
+                                {% endif %}
+                                {% endif %}
+
+                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#editModal{{ a.id }}" title="Modifier l'acte">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-danger delete-btn" data-id="{{ a.id }}" title="Supprimer l'acte">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <div class="modal fade" id="editModal{{ a.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ a.id }}" aria-hidden="true">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <form method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="edit" value="1">
+                            <input type="hidden" name="acte_id" value="{{ a.id }}">
+
+                            <div class="modal-header bg-primary text-white">
+                              <h5 class="modal-title" id="editModalLabel{{ a.id }}">
+                                <i class="bi bi-pencil-square me-2"></i> Modifier l'acte N° {{ a.numero }}/{{ a.annee }}
+                              </h5>
+                              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Année</label>
+                                        <input type="number" name="annee" class="form-control" value="{{ a.annee }}" required>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">Nom</label>
+                                        <input type="text" name="nom" class="form-control" value="{{ a.nom }}" required>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">Prénom</label>
+                                        <input type="text" name="prenom" class="form-control" value="{{ a.prenom }}" required>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">Sexe</label>
+                                        <select name="sexe" class="form-select">
+                                            <option value="M" {% if a.sexe == 'M' %}selected{% endif %}>Masculin</option>
+                                            <option value="F" {% if a.sexe == 'F' %}selected{% endif %}>Féminin</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">Date décès</label>
+                                        <input type="date" name="date_deces" class="form-control" value="{{ a.date_deces|date:'Y-m-d' }}" required>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <label class="form-label">Lieu décès</label>
+                                        <input type="text" name="lieu_deces" class="form-control" value="{{ a.lieu_deces }}" required>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label">Cause décès</label>
+                                        <textarea name="cause_deces" class="form-control" rows="2">{{ a.cause_deces }}</textarea>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label">Déclarant</label>
+                                        <input type="text" name="declarant" class="form-control" value="{{ a.declarant }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                              <button type="submit" class="btn btn-primary"><i class="bi bi-save-fill me-1"></i> Enregistrer</button>
+                            </div>
+
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <nav class="mt-4 d-flex justify-content-center">
+                {% if actes.has_other_pages %}
+                    <ul class="pagination pagination-sm shadow-sm">
+                        {% if actes.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ actes.previous_page_number }}&search={{ search }}">Précédent</a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in actes.paginator.page_range %}
+                            {% if actes.number == num %}
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > actes.number|add:'-3' and num < actes.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}&search={{ search }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if actes.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ actes.next_page_number }}&search={{ search }}">Suivant</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </nav>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form method="post" action="">
+        {% csrf_token %}
+        <input type="hidden" name="create" value="1">
+
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="addModalLabel"><i class="bi bi-file-plus-fill me-2"></i> Enregistrer un nouvel acte de décès</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+            {{ form.as_p }}
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-save-fill me-1"></i> Enregistrer l'acte</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll(".delete-btn");
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            if(!confirm("Supprimer définitivement cet acte ?")) return;
+
+            // Masquer la ligne immédiatement pour un effet visuel rapide
+            const row = btn.closest('tr');
+            if (row) row.style.opacity = '0.5';
+
+            fetch("", {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: new URLSearchParams({
+                    action: "delete",
+                    id: btn.getAttribute("data-id")
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if(data.status === "success") {
+                    // Supprimer la ligne de la table après succès
+                    if (row) row.remove();
+                } else {
+                    if (row) row.style.opacity = '1'; // Rétablir si échec
+                    alert("Erreur : " + (data.message || "Erreur inconnue lors de la suppression."));
+                }
+            })
+            .catch(error => {
+                if (row) row.style.opacity = '1';
+                console.error('Erreur:', error);
+                alert("Une erreur de communication est survenue.");
+            });
+        });
+    });
+});
+</script>
+
+{% endblock %}

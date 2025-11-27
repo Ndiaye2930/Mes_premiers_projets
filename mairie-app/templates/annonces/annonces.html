@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- TITLE + BUTTON -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold">📢 Gestion des annonces officielles</h3>
+        <button id="btnCreate" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crudModal">
+            ➕ Nouvelle annonce
+        </button>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <form method="GET" class="input-group mb-4">
+        <input type="text" name="q" value="{{ search }}" class="form-control" placeholder="Rechercher une annonce...">
+        <button class="btn btn-outline-secondary">Rechercher</button>
+    </form>
+
+    <!-- LISTE DES ANNONCES -->
+    <div class="row">
+        {% for annonce in annonces %}
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ annonce.titre }}</h5>
+                    <p class="text-muted small mb-1">{{ annonce.created_at|date:"d/m/Y H:i" }}</p>
+                    <p class="card-text">{{ annonce.contenu|truncatechars:120 }}</p>
+
+                    {% if annonce.statut == "brouillon" %}
+                        <span class="badge bg-secondary">Brouillon</span>
+                    {% elif annonce.statut == "publie" %}
+                        <span class="badge bg-success">Publié</span>
+                    {% else %}
+                        <span class="badge bg-danger">Archivé</span>
+                    {% endif %}
+
+                    <div class="mt-3 d-flex gap-2">
+                        <!-- EDIT -->
+                        <button 
+                            class="btn btn-warning btn-sm btnEdit"
+                            data-bs-toggle="modal"
+                            data-bs-target="#crudModal"
+                            data-id="{{ annonce.id }}"
+                            data-titre="{{ annonce.titre|escapejs }}"
+                            data-contenu="{{ annonce.contenu|escapejs }}"
+                            data-statut="{{ annonce.statut }}">
+                            ✏ Modifier
+                        </button>
+
+                        <!-- DELETE -->
+                        <button 
+                            class="btn btn-danger btn-sm btnDelete"
+                            data-bs-toggle="modal"
+                            data-bs-target="#crudModal"
+                            data-id="{{ annonce.id }}"
+                            data-action="delete"
+                            data-titre="{{ annonce.titre|escapejs }}">
+                            🗑 Supprimer
+                        </button>
+
+                        {% if annonce.fichier_pdf %}
+                        <a href="{{ annonce.fichier_pdf.url }}" class="btn btn-outline-primary btn-sm" download>📄 PDF</a>
+                        {% endif %}
+
+                        <a href="{% url 'annonce_publique' annonce.id %}" class="btn btn-info btn-sm text-white" target="_blank">
+                            🌐 Voir public
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="d-flex justify-content-center mt-4">
+        <nav>
+            <ul class="pagination">
+                {% if annonces.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ annonces.previous_page_number }}{% if search %}&q={{ search }}{% endif %}">&laquo;</a>
+                </li>
+                {% endif %}
+                {% for num in annonces.paginator.page_range %}
+                <li class="page-item {% if num == annonces.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}{% if search %}&q={{ search }}{% endif %}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if annonces.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ annonces.next_page_number }}{% if search %}&q={{ search }}{% endif %}">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- SINGLE CRUD MODAL -->
+<div class="modal fade" id="crudModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="POST" enctype="multipart/form-data" id="crudForm">
+        {% csrf_token %}
+        <input type="hidden" name="action" id="formAction" value="create">
+        <input type="hidden" name="id" id="formId">
+
+        <div class="modal-header">
+            <h5 class="modal-title" id="crudTitle">Nouvelle annonce</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+
+        <div class="modal-body" id="crudBody">
+            <div class="mb-3">
+                <label class="form-label">Titre</label>
+                <input type="text" name="titre" id="formTitre" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contenu</label>
+                <textarea name="contenu" id="formContenu" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <div class="mb-3" id="pdfGroup">
+                <label class="form-label">PDF (optionnel)</label>
+                <input type="file" name="fichier_pdf" id="formPdf" class="form-control">
+            </div>
+
+            <div class="mb-3" id="deleteMessage" style="display:none;">
+                Voulez-vous vraiment supprimer <b id="deleteTitre"></b> ?
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary" id="crudBtn">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JS to populate modal -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('crudModal');
+    const form = document.getElementById('crudForm');
+    const title = document.getElementById('crudTitle');
+    const actionInput = document.getElementById('formAction');
+    const idInput = document.getElementById('formId');
+    const titreInput = document.getElementById('formTitre');
+    const contenuInput = document.getElementById('formContenu');
+    const deleteMessage = document.getElementById('deleteMessage');
+    const deleteTitre = document.getElementById('deleteTitre');
+    const pdfGroup = document.getElementById('pdfGroup');
+    const crudBtn = document.getElementById('crudBtn');
+
+    document.querySelectorAll('.btnEdit').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const titre = this.dataset.titre;
+            const contenu = this.dataset.contenu;
+            const statut = this.dataset.statut;
+
+            title.textContent = "Modifier l'annonce";
+            actionInput.value = "edit";
+            idInput.value = id;
+            titreInput.value = titre;
+            contenuInput.value = contenu;
+
+            pdfGroup.style.display = "block";
+            deleteMessage.style.display = "none";
+            crudBtn.classList.remove("btn-danger");
+            crudBtn.classList.add("btn-warning");
+            crudBtn.textContent = "Enregistrer";
+        });
+    });
+
+    document.querySelectorAll('.btnDelete').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const titre = this.dataset.titre;
+
+            title.textContent = "Supprimer l'annonce";
+            actionInput.value = "delete";
+            idInput.value = id;
+
+            deleteMessage.style.display = "block";
+            deleteTitre.textContent = titre;
+            pdfGroup.style.display = "none";
+            crudBtn.classList.remove("btn-warning");
+            crudBtn.classList.add("btn-danger");
+            crudBtn.textContent = "Supprimer";
+
+            titreInput.value = "";
+            contenuInput.value = "";
+        });
+    });
+
+    // Reset modal on close
+    modal.addEventListener('hidden.bs.modal', function () {
+        title.textContent = "Nouvelle annonce";
+        actionInput.value = "create";
+        idInput.value = "";
+        titreInput.value = "";
+        contenuInput.value = "";
+        pdfGroup.style.display = "block";
+        deleteMessage.style.display = "none";
+        crudBtn.classList.remove("btn-danger");
+        crudBtn.classList.add("btn-primary");
+        crudBtn.textContent = "Enregistrer";
+    });
+});
+</script>
+
+{% endblock %}

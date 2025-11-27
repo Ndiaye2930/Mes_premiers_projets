@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+ 
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center pb-2 mb-4 border-bottom">
+        <h3 class="fw-bold text-dark">
+            <i class="bi bi-file-earmark-heart-fill text-danger me-2"></i> Gestion des Actes de Mariage
+        </h3>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" onclick="window.print()">
+                <i class="bi bi-printer"></i> Imprimer
+            </button>
+
+            <a href="{% url 'export_mariage_csv' %}" class="btn btn-outline-info">
+                <i class="bi bi-file-earmark-spreadsheet-fill"></i> Export CSV
+            </a>
+
+            <a href="{% url 'export_mariage_pdf_list' %}" class="btn btn-outline-danger">
+                <i class="bi bi-file-earmark-pdf-fill"></i> PDF Liste
+            </a>
+
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                <i class="bi bi-plus-circle-fill"></i> Nouvel Acte
+            </button>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            
+            <form method="get" class="mb-4">
+                <div class="input-group input-group-lg">
+                    <input type="text" name="search" class="form-control" 
+                           placeholder="Rechercher par numéro d'acte, nom de l'époux ou de l'épouse..." 
+                           value="{{ search }}">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Rechercher</button>
+                    {% if search %}
+                        <a href="{% url 'gerer_mariages' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle-fill"></i> Annuler
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+            
+            {% if not actes %}
+                <div class="alert alert-info text-center" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i> Aucun acte de mariage trouvé.
+                </div>
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle table-striped">
+                    <thead class="bg-light">
+                        <tr>
+                            <th scope="col">N° Acte</th>
+                            <th scope="col">Époux</th>
+                            <th scope="col">Épouse</th>
+                            <th scope="col">Date Mariage</th>
+                            <th scope="col" class="text-center">Statut</th>
+                            <th scope="col" width="180px" class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for acte in actes %}
+                        <tr id="row-{{ acte.id }}">
+                            <td class="fw-bold text-danger">{{ acte.numero }}/{{ acte.annee }}</td>
+                            <td>{{ acte.epoux_nom }} {{ acte.epoux_prenom }}</td>
+                            <td>{{ acte.epouse_nom }} {{ acte.epouse_prenom }}</td>
+                            <td>{{ acte.date_mariage|date:"d/m/Y" }}</td>
+                            
+                            <td class="text-center">
+                                {% if acte.statut == "Validé" %}
+                                    <span class="badge bg-success">Validé</span>
+                                {% elif acte.statut == "Refusé" %}
+                                    <span class="badge bg-danger">Refusé</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark">En attente</span>
+                                {% endif %}
+                            </td>
+
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    
+                                    <button class="btn btn-sm btn-outline-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editModal{{ acte.id }}"
+                                            title="Modifier">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+
+                                    <a href="{% url 'acte_mariage_pdf' acte.id %}"
+                                       class="btn btn-sm btn-outline-info"
+                                       title="PDF Acte">
+                                        <i class="bi bi-file-earmark-text"></i>
+                                    </a>
+                                    
+                                    {% if acte.statut != "Validé" %}
+                                    <a href="{% url 'valider_mariage' acte.id %}"
+                                       class="btn btn-sm btn-outline-success"
+                                       title="Valider">
+                                        <i class="bi bi-check2-square"></i>
+                                    </a>
+                                    {% endif %}
+                                    
+                                    <button class="btn btn-sm btn-outline-danger delete-btn"
+                                            data-id="{{ acte.id }}"
+                                            title="Supprimer">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <div class="modal fade" id="editModal{{ acte.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ acte.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    
+                                    <div class="modal-header bg-danger text-white">
+                                        <h5 class="modal-title" id="editModalLabel{{ acte.id }}">
+                                            <i class="bi bi-file-earmark-heart-fill me-2"></i> Modifier l'acte N° {{ acte.numero }}/{{ acte.annee }}
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    
+                                    <form method="post" action="">
+                                        <div class="modal-body">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="edit" value="1">
+                                            <input type="hidden" name="acte_id" value="{{ acte.id }}">
+                                            {{ form.as_p }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-danger"><i class="bi bi-save-fill me-1"></i> Enregistrer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <nav class="mt-4 d-flex justify-content-center">
+                <ul class="pagination pagination-sm shadow-sm">
+                    {% if actes.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ actes.previous_page_number }}&search={{ search }}">Précédent</a>
+                        </li>
+                    {% endif %}
+
+                    {% for num in actes.paginator.page_range %}
+                        {% if actes.number == num %}
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% elif num > actes.number|add:'-3' and num < actes.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}&search={{ search }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if actes.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ actes.next_page_number }}&search={{ search }}">Suivant</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="addModalLabel"><i class="bi bi-plus-circle-fill me-2"></i> Nouvel Acte de Mariage</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form method="post" action="">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <input type="hidden" name="create" value="1">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-floppy-fill me-1"></i> Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Nécessite l'inclusion de jQuery dans base.html si la fonction $ est utilisée, sinon adapter en JS Vanilla
+$(document).on("click", ".delete-btn", function(){
+    if(confirm("Voulez-vous vraiment supprimer cet acte de mariage ?")){
+        let id = $(this).data("id");
+
+        // Utilisation de la fonction fetch standard pour plus de compatibilité si jQuery n'est pas certain.
+        // Si vous utilisez JQuery partout, le bloc ci-dessous est mieux
+        
+        $.ajax({
+            url: "", // Assurez-vous que l'URL par défaut gère la requête POST
+            type: "POST",
+            data: {
+                "id": id,
+                "action": "delete",
+                "csrfmiddlewaretoken": "{{ csrf_token }}"
+            },
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            success: function(){
+                // Supprimer la ligne du tableau sans recharger si possible
+                document.getElementById("row-" + id).remove();
+                // Ou recharger
+                // location.reload();
+            },
+            error: function(){
+                alert("Erreur lors de la suppression de l'acte.");
+            }
+        });
+        
+    }
+});
+</script>
+
+{% endblock %}

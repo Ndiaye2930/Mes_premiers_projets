@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+    <h3 class="fw-bold text-primary"><i class="bi bi-file-earmark-text-fill me-2"></i> Actes de naissance</h3>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-secondary" onclick="window.print()">
+        <i class="bi bi-printer me-1"></i> Imprimer
+      </button>
+
+      <a href="{% url 'export_naissance_csv' %}" class="btn btn-outline-info">
+        <i class="bi bi-file-earmark-spreadsheet-fill me-1"></i> Export CSV
+      </a>
+
+      {% for acte in actes %}
+<tr> 
+  <td>
+    <a href="{% url 'acte_naissance_pdf' id=acte.id %}" class="btn btn-sm btn-outline-danger">
+      Export PDF
+    </a>
+  </td>
+</tr>
+{% endfor %}
+
+
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalAdd">
+        <i class="bi bi-plus-lg me-1"></i> Nouvel acte
+      </button>
+    </div>
+  </div>
+
+    <form method="get" class="mb-4">
+    <div class="input-group input-group-lg shadow-sm">
+      <input type="text" name="search" value="{{ search }}" class="form-control"
+             placeholder="Rechercher : N°, nom, prénom...">
+      <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+    </div>
+  </form>
+
+    <div class="table-responsive card shadow-sm">
+    <table class="table table-hover align-middle mb-0" id="actesTable">
+      <thead class="table-primary text-white">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Année</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Prénom</th>
+          <th scope="col">Sexe</th>
+          <th scope="col">Date de naissance</th>
+          <th scope="col">Lieu</th>
+          <th scope="col" class="text-center">Statut</th>
+          <th scope="col" width="250px" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for acte in actes %}
+        <tr id="row-{{ acte.id }}">
+          <td class="fw-bold">{{ acte.numero }}</td>
+          <td>{{ acte.annee }}</td>
+          <td>{{ acte.nom }}</td>
+          <td>{{ acte.prenom }}</td>
+          <td>{{ acte.get_sexe_display }}</td>
+          <td>{{ acte.date_naissance|date:"d/m/Y" }}</td>
+          <td>{{ acte.lieu_naissance }}</td>
+          <td class="text-center">
+            {% if acte.statut == "Validé" %}
+              <span class="badge bg-success py-2">Validé</span>
+            {% elif acte.statut == "Refusé" %}
+              <span class="badge bg-danger py-2">Refusé</span>
+            {% else %}
+              <span class="badge bg-warning text-dark py-2">En attente</span>
+            {% endif %}
+          </td>
+          <td class="text-center">
+                <div class="btn-group btn-group-sm" role="group">
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ acte.id }}" title="Modifier">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                                <a href="{% url 'acte_naissance_pdf' acte.id %}" class="btn btn-dark" target="_blank" title="PDF">
+                      <i class="bi bi-file-earmark-pdf"></i>
+                    </a>
+
+                                <form method="post" action="{% url 'valider_acte' acte.id %}" style="display:inline;">
+                      {% csrf_token %}
+                      <button class="btn btn-success" type="submit" {% if acte.statut == "Validé" %}disabled{% endif %} title="Valider">
+                        <i class="bi bi-check2-circle"></i>
+                      </button>
+                    </form>
+
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ acte.id }}" title="Supprimer">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+          </td>
+        </tr>
+
+                <div class="modal fade" id="modalEdit{{ acte.id }}" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i> Modifier acte — {{ acte.numero }}/{{ acte.annee }}</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                  {% csrf_token %}
+                  <input type="hidden" name="acte_id" value="{{ acte.id }}">
+
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label class="form-label">Numéro</label>
+                      <input name="numero" class="form-control" value="{{ acte.numero }}" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Année</label>
+                      <input name="annee" type="number" class="form-control" value="{{ acte.annee }}" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Sexe</label>
+                      <select name="sexe" class="form-select" required>
+                        <option value="M" {% if acte.sexe == "M" %}selected{% endif %}>Masculin</option>
+                        <option value="F" {% if acte.sexe == "F" %}selected{% endif %}>Féminin</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mt-1">
+                    <div class="col-md-4">
+                      <label class="form-label">Nom</label>
+                      <input name="nom" class="form-control" value="{{ acte.nom }}" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Prénom</label>
+                      <input name="prenom" class="form-control" value="{{ acte.prenom }}" required>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label">Date de naissance</label>
+                      <input name="date_naissance" type="date" class="form-control" value="{{ acte.date_naissance|date:'Y-m-d' }}" required>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                      <label class="form-label">Lieu de naissance</label>
+                      <input name="lieu_naissance" class="form-control" value="{{ acte.lieu_naissance }}">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Déclarant</label>
+                      <input name="declarant" class="form-control" value="{{ acte.declarant }}">
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                      <label class="form-label">Nom de la mère</label>
+                      <input name="nom_mere" class="form-control" value="{{ acte.nom_mere }}">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Nom du père</label>
+                      <input name="nom_pere" class="form-control" value="{{ acte.nom_pere }}">
+                    </div>
+                  </div>
+
+                  <div class="mt-3">
+                    <label class="form-label">Statut</label>
+                    <select name="statut" class="form-select">
+                      <option value="En attente" {% if acte.statut == "En attente" %}selected{% endif %}>En attente</option>
+                      <option value="Validé" {% if acte.statut == "Validé" %}selected{% endif %}>Validé</option>
+                      <option value="Refusé" {% if acte.statut == "Refusé" %}selected{% endif %}>Refusé</option>
+                    </select>
+                  </div>
+
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <button type="submit" name="edit" class="btn btn-primary"><i class="bi bi-save-fill me-1"></i> Enregistrer</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+                <div class="modal fade" id="modalDelete{{ acte.id }}" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title"><i class="bi bi-trash-fill me-2"></i> Confirmer suppression</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                Voulez-vous vraiment supprimer l'acte **{{ acte.numero }}/{{ acte.annee }}** — <em>{{ acte.nom }} {{ acte.prenom }}</em> ?
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button class="btn btn-danger delete-acte" data-id="{{ acte.id }}"><i class="bi bi-trash-fill me-1"></i> Supprimer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+    <nav class="mt-4 d-flex justify-content-center">
+    <ul class="pagination shadow-sm">
+      {% if actes.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ actes.previous_page_number }}&search={{ search }}">Précédent</a>
+        </li>
+      {% endif %}
+      {% for p in actes.paginator.page_range %}
+        <li class="page-item {% if actes.number == p %}active{% endif %}">
+          <a class="page-link" href="?page={{ p }}&search={{ search }}">{{ p }}</a>
+        </li>
+      {% endfor %}
+      {% if actes.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ actes.next_page_number }}&search={{ search }}">Suivant</a>
+        </li>
+      {% endif %}
+      
+    </ul>
+  </nav>
+</div>
+
+<div class="modal fade" id="modalAdd" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title"><i class="bi bi-plus-lg me-2"></i> Ajouter un acte de naissance</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form method="post">
+        <div class="modal-body">
+          {% csrf_token %}
+          {{ form.as_p }}
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button name="create" class="btn btn-success"><i class="bi bi-save-fill me-1"></i> Créer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll(".delete-acte").forEach(btn => {
+  btn.addEventListener("click", function(){
+    if(!confirm("Confirmer la suppression ?")) return;
+    const id = this.dataset.id;
+    const url = ""; // post to same view
+    
+    // Ajout des données de formulaire pour l'envoi POST
+    const formData = new URLSearchParams();
+    formData.append('id', id);
+
+    // Récupérer le jeton CSRF
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+
+    fetch(url, {
+      method: "POST",
+      headers: { 
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": csrfToken // Ajout du CSRF Token
+        },
+      body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+      if(data.status === "success"){
+        // remove row and hide modal
+        const row = document.getElementById("row-" + id);
+        if(row) row.remove();
+        const modal = document.getElementById("modalDelete" + id);
+        // Utiliser la fonction Bootstrap pour cacher le modal
+        const m = bootstrap.Modal.getInstance(modal);
+        if(m) m.hide();
+      } else {
+        alert("Erreur suppression");
+      }
+    })
+    .catch(() => alert("Erreur réseau"));
+  });
+});
+</script>
+
+{% endblock %}

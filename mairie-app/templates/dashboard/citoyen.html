@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid mt-4">
+  <h2>Mon Espace Citoyen</h2>
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><i class="bi bi-journal-text"></i> Mes Demandes</h5>
+          <p class="card-text">Suivre l’état de vos demandes de certificats et actes.</p>
+          <a href="#" class="btn btn-light btn-sm">Voir</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card text-white bg-success mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><i class="bi bi-file-earmark-plus"></i> Nouvelle Demande</h5>
+          <p class="card-text">Créer une nouvelle demande de certificat ou acte.</p>
+          <a href="#" class="btn btn-light btn-sm">Créer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

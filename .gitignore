@@ -1,0 +1,26 @@
+# Environnement virtuel
+venv/
+env/
+.venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Base de données
+db.sqlite3
+
+# Fichiers sensibles
+.env
+
+# Fichiers Django
+/staticfiles/
+/media/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
