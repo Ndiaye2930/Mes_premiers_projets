@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariem'Air Compagnie</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+         <h1 class="titre">Mariem'Air ✈️</h1>
+         <h3 class="slogan">«La tête dans les nuages !»</h3>
+
+         <div class="search-form">
+ <form method="post">
+          <div class="form-group"> 
+          <label for="provenance">Ville de départ</label>
+          <input type="text" name="provenance" id="provenance" placeholder="Paris, Londres, ...">
+
+          <label for="arrivée">Ville d'arrivée</label>
+          <input type="text" name="arrivéé" id="arrivéé" placeholder="Paris, Londres, ...">
+         </div>
+
+         <div class="form-group"> 
+          <label for="départ">Date de départ</label>
+          <input type="date" name="départ" id="départ" value="13/03/24">
+
+          <label for="retour">Date de retour</label>
+          <input type="date" name="retour" id="retour" value="13/03/24">
+        </div>
+
+        <div class="form-group">
+          <label for="adultes">Nombre d'adultes</label>
+          <select name="adultes" id="adultes">
+            <option selected="selected">0 Adulte</option>
+            <option>1 Adulte</option>
+            <option>2 Adultes</option>
+            <option>3 Adultes</option>
+            <option>4 Adultes</option>
+            <option>5 Adultes</option>
+          </select>
+
+          <label for="adultes">Nombre d'enfants</label>
+          <select name="enfants" id="enfants">
+            <option selected="selected">0 Enfant</option>
+            <option>1 Enfant</option>
+            <option>2 Enfants</option>
+            <option>3 Enfants</option>
+            <option>4 Enfants</option>
+            <option>5 Enfants</option>
+          </select>
+        </div>
+
+          <!--<label for="type">Catégorie</label>
+          <select name="type" id="type">
+            <option selected="selected">Classe Economique</option>
+            <option>Classe Affaires</option>
+          </select>-->
+          <div class="button-submit">
+          <input type="submit" value="Lancer la recherche " name="recherche" id="recherche">
+          </div>
+           
+        </form>
+           
+
+         </div>
+
+        
+
+    </header>
+    <section id="destinations">
+        <h3>Nous proposons differentes destinations pour découvrir le monde ! </h3>
+
+       <div class="destinations-groupe">
+
+        <div class="destination-item barça">
+          <div class="overlay">
+            <span class="prix">Dès 80€</span>
+            <span class="nom" style="top: 20px;">Barcelone</span>
+          </div>
+        </div>
+
+        <div class="destination-item dubai">
+          <div class="overlay">
+            <span class="prix">Dès 300€</span>
+            <span class="nom">Dubai</span>
+          </div>
+        </div>
+
+          <div class="destination-item philippine">
+            <div class="overlay">
+              <span class="prix">Dès 1200€</span>
+              <span class="nom"style="top: 20px;">Philippines</span>
+            </div>
+            </div>
+ 
+            <div class="destination-item londres">
+              <div class="overlay">
+                <span class="prix">Dès 65€</span>
+                <span class="nom"style="top: 25px;">Londres</span>
+              </div>
+            </div>
+
+            <div class="destination-item paris">
+              <div class="overlay">
+                <span class="prix">Dès 55€</span>
+                <span class="nom" style="top: 25px;">Paris</span>
+              </div>
+            </div>
+
+            <div class="destination-item tunis">
+              <div class="overlay">
+                <span class="prix">Dès 90€</span>
+                <span class="nom" style="top: 25px;">Tunis</span>
+              </div>
+            </div>
+       </div>
+    </section>
+     
+    <footer>
+      <hr>
+      <p>&copy; 2024 - Mariem'Air - Tout droits réservés <a href="cgu.html">MAC</a></p>
+    </footer>
+ </body>
+</html>
