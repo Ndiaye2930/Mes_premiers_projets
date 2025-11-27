@@ -1,0 +1,28 @@
+main{
+        border: 1px solid gray;
+        box-shadow: 50px 50px 50px black;
+        margin: 10%;  
+        width: 50%;
+        height: 50%;
+       
+     }
+*{
+    margin: 0;
+    padding: 0;
+    
+}
+div {
+      float: left;
+      width: 30%;
+      height: 100%;
+}
+ol {
+     border: 2px solid black; width: 300px;   margin: 10px;  
+ }
+ p {
+    float: right; 
+    width:70%;
+    padding-top: 10%;
+    height: 10%;
+ }
+ 
